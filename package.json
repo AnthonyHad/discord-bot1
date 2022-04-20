@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/AnthonyHad/discord-bot1#readme",
   "dependencies": {
+    "@discordjs/builders": "^0.13.0",
+    "@discordjs/rest": "^0.4.1",
+    "discord-api-types": "^0.31.2",
     "discord.js": "^13.6.0"
   }
 }
