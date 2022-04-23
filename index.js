@@ -22,27 +22,40 @@ for (const file of commandFiles) {
   console.log(client.commands);
 }
 
-// When the client is ready, run this code (only once)
-client.once('ready', () => {
-  console.log('Ready!');
-});
+const eventFiles = fs
+  .readdirSync('./events')
+  .filter((file) => file.endsWith('.js'));
+
+for (const file of eventFiles) {
+  const event = require(`./events/${file}`);
+  if (event.once) {
+    client.once(event.name, (...args) => event.execute(...args));
+  } else {
+    client.on(event.name, (...args) => event.execute(...args));
+  }
+}
+
+// // When the client is ready, run this code (only once)
+// client.once('ready', () => {
+//   console.log('Ready!');
+// });
 
 //listening to commands
-client.on('interactionCreate', async (interaction) => {
-  if (!interaction.isCommand()) return;
+// client.on('interactionCreate', async (interaction) => {
+//   if (!interaction.isCommand()) return;
 
-  const command = client.commands.get(interaction.commandName);
+//   const command = client.commands.get(interaction.commandName);
 
-  try {
-    await command.execute(interaction);
-  } catch (err) {
-    console.error(err);
-    await interaction.reply({
-      content: 'There was an error while executing this command!',
-      ephemeral: true,
-    });
-  }
-});
+//   try {
+//     await command.execute(interaction);
+//   } catch (err) {
+//     console.error(err);
+//     await interaction.reply({
+//       content: 'There was an error while executing this command!',
+//       ephemeral: true,
+//     });
+//   }
+// });
 
 // Login to Discord with your client's token
 client.login(token);
