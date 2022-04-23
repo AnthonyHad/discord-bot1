@@ -13,10 +13,13 @@ const commandFiles = fs
   .readdirSync('./commands')
   .filter((file) => file.endsWith('.js'));
 for (const file of commandFiles) {
+  console.log(file);
   const command = require(`./commands/${file}`);
   // Set a new item in the Collection
   // With the key as the command name and the value as the exported module
+  console.log(command);
   client.commands.set(command.data.name, command);
+  console.log(client.commands);
 }
 
 // When the client is ready, run this code (only once)
@@ -25,7 +28,6 @@ client.once('ready', () => {
 });
 
 //listening to commands
-
 client.on('interactionCreate', async (interaction) => {
   if (!interaction.isCommand()) return;
 
@@ -40,18 +42,6 @@ client.on('interactionCreate', async (interaction) => {
       ephemeral: true,
     });
   }
-
-  // if (commandName === 'ping') {
-  //   await interaction.reply('Pong!');
-  // } else if (commandName === 'server') {
-  //   await interaction.reply(
-  //     `Server name: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`
-  //   );
-  // } else if (commandName === 'user') {
-  //   await interaction.reply(
-  //     `Your Tag: ${interaction.user.tag}\nYour id: ${interaction.user.id}`
-  //   );
-  // }
 });
 
 // Login to Discord with your client's token
