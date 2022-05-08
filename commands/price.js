@@ -1,5 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageAttachment } = require('discord.js');
 const cryptoData = require('../priceScript');
+const path = require('path');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -24,11 +26,15 @@ module.exports = {
   async execute(interaction) {
     const crypto = interaction.options.getString('crypto');
     const cryptoName = interaction.options.get('crypto').value;
+    // const image = path.join(__dirname, '../Bitcoin-Emblem.png');
     const price = await cryptoData.getPrice(crypto);
-    await interaction.reply(
-      `${
+    const message = await interaction.reply({
+      content: `${
         cryptoName[0].toUpperCase() + crypto.substr(1)
-      } is trading at ${price.toString()}`
-    );
+      } is trading at ${price.toString()}`,
+      // files: [image],
+      fetchReply: true,
+    });
+    message.react('972953809959657572');
   },
 };
