@@ -23,8 +23,14 @@ module.exports = {
     ),
   async execute(interaction) {
     const crypto = interaction.options.getString('crypto');
+    const cryptoName = interaction.options.get('crypto').value;
+    console.log(cryptoName);
     const price = await getPrice(crypto);
-    await interaction.reply(price.toString());
+    await interaction.reply(
+      `${
+        cryptoName[0].toUpperCase() + crypto.substr(1)
+      } is trading at ${price.toString()}`
+    );
   },
 };
 
