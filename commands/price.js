@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const fetch = require('node-fetch');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -21,6 +22,16 @@ module.exports = {
         )
     ),
   async execute(interaction) {
-    await interaction.reply('30,000');
+    const crypto = interaction.options.getString('crypto');
+    const price = await getPrice(crypto);
+    await interaction.reply(price.toString());
   },
 };
+
+async function getPrice(coin) {
+  const response = await fetch(
+    `https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=usd`
+  );
+  const data = await response.json();
+  return data[coin].usd;
+}
