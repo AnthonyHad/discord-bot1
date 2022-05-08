@@ -33,5 +33,9 @@ async function getPrice(coin) {
     `https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=usd`
   );
   const data = await response.json();
-  return data[coin].usd;
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+  return formatter.format(data[coin].usd);
 }
