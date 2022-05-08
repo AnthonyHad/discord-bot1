@@ -1,5 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const fetch = require('node-fetch');
+const { MessageAttachment } = require('discord.js');
+const cryptoData = require('../priceScript');
+const path = require('path');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -24,24 +26,15 @@ module.exports = {
   async execute(interaction) {
     const crypto = interaction.options.getString('crypto');
     const cryptoName = interaction.options.get('crypto').value;
-    console.log(cryptoName);
-    const price = await getPrice(crypto);
-    await interaction.reply(
-      `${
+    // const image = path.join(__dirname, '../Bitcoin-Emblem.png');
+    const price = await cryptoData.getPrice(crypto);
+    const message = await interaction.reply({
+      content: `${
         cryptoName[0].toUpperCase() + crypto.substr(1)
-      } is trading at ${price.toString()}`
-    );
+      } is trading at ${price.toString()}`,
+      // files: [image],
+      fetchReply: true,
+    });
+    message.react('972953809959657572');
   },
 };
-
-async function getPrice(coin) {
-  const response = await fetch(
-    `https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=usd`
-  );
-  const data = await response.json();
-  const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  });
-  return formatter.format(data[coin].usd);
-}
