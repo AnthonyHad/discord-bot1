@@ -27,11 +27,13 @@ module.exports = {
     const crypto = interaction.options.getString('crypto');
     const cryptoName = interaction.options.get('crypto').value;
     // const image = path.join(__dirname, '../Bitcoin-Emblem.png');
-    const price = await cryptoData.getPrice(crypto);
+    const data = await cryptoData.getPrice(crypto);
     const message = await interaction.reply({
       content: `${
         cryptoName[0].toUpperCase() + crypto.substr(1)
-      } is trading at ${price.toString()}`,
+      } is trading at ${data[cryptoName].usd} with ${
+        data[cryptoName].usd_24h_change
+      } change over the past 24h`,
       // files: [image],
       fetchReply: true,
     });
