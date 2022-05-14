@@ -19,6 +19,14 @@ module.exports = {
           {
             name: 'Ethereum',
             value: 'ethereum',
+          },
+          {
+            name: 'Binance Coin',
+            value: 'bnb',
+          },
+          {
+            name: 'Tezos',
+            value: 'tezos',
           }
         )
     ),
@@ -26,13 +34,15 @@ module.exports = {
   async execute(interaction) {
     const crypto = interaction.options.getString('crypto');
     const cryptoName = interaction.options.get('crypto').value;
+    console.log(cryptoName);
     const data = await cryptoData.getPrice(crypto);
+    console.log(data);
     const cryptoEmbed = new MessageEmbed()
       .setTitle(`${cryptoName[0].toUpperCase() + crypto.substr(1)}`)
-      .setDescription('Market data')
+      .setDescription('Latest market data')
       .setColor('#01234')
       .setThumbnail(
-        'https://raw.githubusercontent.com/condacore/cryptocurrency-icons/master/32x32/bitcoin.png '
+        `https://raw.githubusercontent.com/condacore/cryptocurrency-icons/master/32x32/${cryptoName}.png `
       )
       .addFields(
         {
