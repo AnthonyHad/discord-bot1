@@ -75,7 +75,7 @@ module.exports = {
   },
 };
 
-//helllo
+//hellloerwerewrewr
 //Old interaction using message replies
 //  async execute(interaction) {
 //     const crypto = interaction.options.getString('crypto');
