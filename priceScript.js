@@ -7,13 +7,12 @@ async function getPrice(coin) {
 `
   );
   const data = await response.json();
-  console.log(data);
+  // console.log(data);
   const formatterCurrency = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     maximumFractionDigits: 0,
   });
-
   data[coin].usd = formatterCurrency.format(Math.round(data[coin].usd));
   data[coin].usd_market_cap = formatterCurrency.format(
     Math.round(parseFloat(data[coin].usd_market_cap))
@@ -27,7 +26,8 @@ async function getPrice(coin) {
   return data;
 }
 
-getPrice('bitcoin').then((res) => console.log(res));
+// getPrice('binancecoin').then((res) => console.log(res));
+
 module.exports = {
   getPrice,
 };
