@@ -28,11 +28,36 @@ module.exports = {
     const cryptoName = interaction.options.get('crypto').value;
     const data = await cryptoData.getPrice(crypto);
     const cryptoEmbed = new MessageEmbed()
-      .setTitle('Price')
-      .setDescription('Bitcoin Price')
+      .setTitle(`${cryptoName[0].toUpperCase() + crypto.substr(1)}`)
+      .setDescription('Market data')
       .setColor('#01234')
       .setThumbnail(
         'https://raw.githubusercontent.com/condacore/cryptocurrency-icons/master/32x32/bitcoin.png '
+      )
+      .addFields(
+        {
+          name: 'Price',
+          value: data[cryptoName].usd,
+          inline: true,
+        },
+        { name: '\u200B', value: '\u200B', inline: true },
+        {
+          name: 'Market Cap',
+          value: data[cryptoName].usd_market_cap,
+          inline: true,
+        },
+        { name: '\u200B', value: '\u200B' },
+        {
+          name: 'Volume(24h)',
+          value: data[cryptoName].usd_24h_vol,
+          inline: true,
+        },
+        { name: '\u200B', value: '\u200B', inline: true },
+        {
+          name: 'Change(24h)',
+          value: data[cryptoName].usd_24h_change,
+          inline: true,
+        }
       );
     await interaction.reply({
       embeds: [cryptoEmbed],

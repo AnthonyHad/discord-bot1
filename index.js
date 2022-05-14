@@ -13,13 +13,13 @@ const commandFiles = fs
   .readdirSync('./commands')
   .filter((file) => file.endsWith('.js'));
 for (const file of commandFiles) {
-  console.log(file);
+  // console.log(file);
   const command = require(`./commands/${file}`);
   // Set a new item in the Collection
   // With the key as the command name and the value as the exported module
-  console.log(command);
+  // console.log(command);
   client.commands.set(command.data.name, command);
-  console.log(client.commands);
+  // console.log(client.commands);
 }
 
 const eventFiles = fs
