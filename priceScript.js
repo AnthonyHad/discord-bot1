@@ -11,13 +11,16 @@ async function getPrice(coin) {
   const formatterCurrency = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
+    maximumFractionDigits: 0,
   });
 
-  data[coin].usd = formatterCurrency.format(data[coin].usd);
+  data[coin].usd = formatterCurrency.format(Math.round(data[coin].usd));
   data[coin].usd_market_cap = formatterCurrency.format(
-    data[coin].usd_market_cap
+    Math.round(parseFloat(data[coin].usd_market_cap))
   );
-  data[coin].usd_24h_vol = formatterCurrency.format(data[coin].usd_24h_vol);
+  data[coin].usd_24h_vol = formatterCurrency.format(
+    Math.round(parseFloat(data[coin].usd_24h_vol))
+  );
   data[coin].usd_24h_change = `${Math.round(
     parseFloat(data[coin].usd_24h_change)
   )}%`;
