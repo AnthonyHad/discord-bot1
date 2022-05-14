@@ -1,7 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageAttachment } = require('discord.js');
 const cryptoData = require('../priceScript');
-const path = require('path');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -23,20 +22,38 @@ module.exports = {
           }
         )
     ),
+
   async execute(interaction) {
     const crypto = interaction.options.getString('crypto');
     const cryptoName = interaction.options.get('crypto').value;
-    // const image = path.join(__dirname, '../Bitcoin-Emblem.png');
     const data = await cryptoData.getPrice(crypto);
-    const message = await interaction.reply({
-      content: `${
-        cryptoName[0].toUpperCase() + crypto.substr(1)
-      } is trading at ${data[cryptoName].usd} with ${
-        data[cryptoName].usd_24h_change
-      } change over the past 24h`,
-      // files: [image],
-      fetchReply: true,
+    const cryptoEmbed = new MessageEmbed()
+      .setTitle('Price')
+      .setDescription('Bitcoin Price')
+      .setColor('#01234')
+      .setThumbnail(
+        'https://raw.githubusercontent.com/condacore/cryptocurrency-icons/master/32x32/bitcoin.png '
+      );
+    await interaction.reply({
+      embeds: [cryptoEmbed],
     });
-    message.react('972953809959657572');
   },
 };
+
+//Old interaction using message replies
+//  async execute(interaction) {
+//     const crypto = interaction.options.getString('crypto');
+//     const cryptoName = interaction.options.get('crypto').value;
+//     // const image = path.join(__dirname, '../Bitcoin-Emblem.png');
+//     const data = await cryptoData.getPrice(crypto);
+//     const message = await interaction.reply({
+//       embeds: [this.cryptoEmbed],
+//       // content: `${
+//       //   cryptoName[0].toUpperCase() + crypto.substr(1)
+//       // } is trading at ${data[cryptoName].usd} with ${
+//       //   data[cryptoName].usd_24h_change
+//       // } change over the past 24h`,
+//       // // files: [image],
+//       // fetchReply: true,
+//     });
+//     message.react('972953809959657572');
