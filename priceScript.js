@@ -27,7 +27,6 @@ async function getPrice(coin) {
 }
 
 // getPrice('binancecoin').then((res) => console.log(res));
-
 module.exports = {
   getPrice,
 };
