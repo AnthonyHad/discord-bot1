@@ -27,6 +27,22 @@ module.exports = {
           {
             name: 'Tezos',
             value: 'tezos',
+          },
+          {
+            name: 'Ripple',
+            value: 'ripple',
+          },
+          {
+            name: 'Cardano',
+            value: 'cardano',
+          },
+          {
+            name: 'Solana',
+            value: 'solana',
+          },
+          {
+            name: 'Dogecoin',
+            value: 'dogecoin',
           }
         )
     ),
