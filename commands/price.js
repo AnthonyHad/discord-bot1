@@ -90,22 +90,3 @@ module.exports = {
     });
   },
 };
-
-//hellloerwerewrewr
-//Old interaction using message replies
-//  async execute(interaction) {
-//     const crypto = interaction.options.getString('crypto');
-//     const cryptoName = interaction.options.get('crypto').value;
-//     // const image = path.join(__dirname, '../Bitcoin-Emblem.png');
-//     const data = await cryptoData.getPrice(crypto);
-//     const message = await interaction.reply({
-//       embeds: [this.cryptoEmbed],
-//       // content: `${
-//       //   cryptoName[0].toUpperCase() + crypto.substr(1)
-//       // } is trading at ${data[cryptoName].usd} with ${
-//       //   data[cryptoName].usd_24h_change
-//       // } change over the past 24h`,
-//       // // files: [image],
-//       // fetchReply: true,
-//     });
-//     message.react('972953809959657572');
