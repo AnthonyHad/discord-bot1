@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"
+    integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <title>My First Chart</title>
+</head>
+
+<body>
+  <canvas id="myChart" width="550" height="550"></canvas>
+  <script>
+    ChartIt()
+    async function ChartIt() {
+      const { labels, yAxis } = await historicalPrice('bitcoin')
+      const plugin = {
+        id: 'custom_canvas_background_color',
+        beforeDraw: (chart) => {
+          const ctx = chart.canvas.getContext('2d');
+          ctx.save();
+          ctx.globalCompositeOperation = 'destination-over';
+          ctx.fillStyle = 'rgb(0, 23, 31)';
+          ctx.fillRect(0, 0, chart.width, chart.height);
+          ctx.restore();
+        }
+      }
+      const ctx = document.getElementById('myChart')
+      const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Bitcoin 1W Price in USD',
+              backgroundColor: 'rgb(227, 178, 60)',
+              borderColor: 'rgb(227, 178, 60)',
+              data: yAxis,
+
+            }
+          ]
+        },
+        plugins: [plugin],
+        options: {
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              ticks: {
+                maxTicksLimit: 7,
+                color: 'rgb(237, 235, 215)',
+                font: {
+                  size: 12,
+                  family: 'Courier'
+                }
+              }
+            },
+            y: {
+              ticks: {
+                callback: function (tick, index, array) {
+                  return '$' + Intl.NumberFormat().format(tick);
+                },
+                color: 'rgb(237, 235, 215)',
+                font: {
+                  size: 15,
+                  family: 'Courier'
+                }
+              }
+            }
+          }
+        }
+      })
+    }
+    async function historicalPrice(crypto) {
+      try {
+        const response = await fetch(
+          `https://api.coingecko.com/api/v3/coins/${crypto}/market_chart?vs_currency=usd&days=7&interval=hourly`
+        );
+        const data = await response.json();
+        const hPrices = data.prices;
+        const xAxis = hPrices.map((x) => new Date(x[0]).toDateString());
+        const newA = xAxis.map(x => x.substring(0, x.length - 4))
+        const yAxis = hPrices.map((x) => x[1]);
+        newA.pop();
+        yAxis.pop();
+        // console.log(newA)
+        // console.log(xAxis, yAxis);
+        return { labels: newA, yAxis: yAxis };
+      } catch (error) {
+        console.log('Failed :(', error);
+      }
+    }
+
+  </script>
+</body>
+
+</html>
