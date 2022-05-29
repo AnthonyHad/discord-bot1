@@ -46,6 +46,9 @@
         plugins: [plugin],
         options: {
           maintainAspectRatio: false,
+          animation: {
+            onComplete: saveAs
+          },
           scales: {
             x: {
               ticks: {
@@ -93,6 +96,13 @@
       }
     }
 
+    function saveAs() {
+      const imageLink = document.createElement('a')
+      const canvas = document.getElementById('myChart')
+      imageLink.href = canvas.toDataURL('image/png', 1)
+      console.log(imageLink.href)
+      return imageLink.href
+    }
   </script>
 </body>
 
