@@ -4,10 +4,12 @@ const fetch = require('node-fetch');
 
 const myChart = new QuickChart();
 
-ChartIt('bitcoin').then((config) => {
+ChartIt('ethereum').then((config) => {
   myChart
     .setConfig(config)
     .setBackgroundColor('rgb(0, 23, 31)')
+    .setHeight(500)
+    .setWidth(800)
     .setVersion('3');
   console.log(myChart.getUrl());
 });
