@@ -1,18 +1,18 @@
 const { ModalBuilder } = require('@discordjs/builders');
-const QuickChart = require('quickchart-js');
+// const QuickChart = require('quickchart-js');
 const fetch = require('node-fetch');
 
-const myChart = new QuickChart();
+// const myChart = new QuickChart();
 
-ChartIt('ethereum').then((config) => {
-  myChart
-    .setConfig(config)
-    .setBackgroundColor('rgb(0, 23, 31)')
-    .setHeight(500)
-    .setWidth(800)
-    .setVersion('3');
-  console.log(myChart.getUrl());
-});
+// ChartIt('solana').then((config) => {
+//   myChart
+//     .setConfig(config)
+//     .setBackgroundColor('rgb(0, 23, 31)')
+//     .setHeight(500)
+//     .setWidth(800)
+//     .setVersion('3');
+//   console.log(myChart.getUrl());
+// });
 
 async function ChartIt(coin) {
   const { labels, yAxis } = await historicalPrice(coin);
@@ -22,7 +22,7 @@ async function ChartIt(coin) {
       labels: labels,
       datasets: [
         {
-          label: `${coin} 1W Price in USD`,
+          label: `${coin} 1W price in $`,
           backgroundColor: 'rgb(227, 178, 60)',
           borderColor: 'rgb(227, 178, 60)',
           data: yAxis,
@@ -53,6 +53,11 @@ async function ChartIt(coin) {
               family: 'Courier',
             },
           },
+        },
+      },
+      elements: {
+        point: {
+          radius: 0,
         },
       },
     },
