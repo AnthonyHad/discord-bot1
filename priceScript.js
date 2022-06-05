@@ -11,7 +11,7 @@ async function getPrice(coin) {
   const formatterCurrency = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
-    maximumFractionDigits: 0,
+    maximumFractionDigits: 2,
   });
   data[coin].usd = formatterCurrency.format(Math.round(data[coin].usd));
   data[coin].usd_market_cap = formatterCurrency.format(

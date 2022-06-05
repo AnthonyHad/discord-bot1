@@ -24,7 +24,7 @@ module.exports = {
           },
           {
             name: 'Binance Coin',
-            value: 'bnb',
+            value: 'binancecoin',
           },
           {
             name: 'Tezos',
@@ -32,7 +32,7 @@ module.exports = {
           },
           {
             name: 'Ripple',
-            value: 'ripple',
+            value: 'xrp',
           },
           {
             name: 'Cardano',
@@ -64,7 +64,7 @@ module.exports = {
       .setVersion('3');
     const cryptoChartLink = await myChart.getShortUrl();
     // console.log(cryptoChartLink);
-    // // console.log(data);
+    console.log(data);
     // // console.log(cryptoChartData);
     const cryptoEmbed = new MessageEmbed()
       .setTitle(`${cryptoName[0].toUpperCase() + crypto.substr(1)}`)
