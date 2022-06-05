@@ -60,6 +60,11 @@ async function ChartIt(coin) {
           radius: 0,
         },
       },
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
     },
   };
   return chartObj;
